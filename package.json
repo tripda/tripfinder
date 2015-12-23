@@ -1,0 +1,24 @@
+{
+  "name": "tripfinder",
+  "version": "0.1.0",
+  "description": "Find trips.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "author": "dhuanco@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "request-promise": "^1.0.2"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "q": "^1.4.1",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
+  }
+}
