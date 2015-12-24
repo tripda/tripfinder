@@ -19,6 +19,8 @@ describe('Trip Factory', function() {
         expect(firstTrip.getPrice()).to.equal(56);
         expect(firstTrip.getSeatsAvailable()).to.equal(2);
         expect(firstTrip.getLadiesOnly()).to.equal(true);
+
+        expect(firstTrip.getDriver().getPicture()).to.equal('https://graph.facebook.com/100005369929083/picture?width=150&height=150');
     });
 });
 

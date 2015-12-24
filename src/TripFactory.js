@@ -1,6 +1,15 @@
 (function(isNode, isAngular) {
-    function TripFactory() {
+    function TripFactory(
+        userFactory
+    ) {
+        var _userFactory = userFactory;
+
+        this.setUserFactory = setUserFactory;
         this.createFromApiResponse = createFromApiResponse;
+
+        function setUserFactory(userFactory) {
+            _userFactory = userFactory;
+        }
 
         function createFromApiResponse(apiResponse) {
             var trips = [];
@@ -8,12 +17,17 @@
             for (var i in apiResponse.result) {
                 var resultItem = apiResponse.result[i];
                 var trip = new Trip(resultItem);
+                var driver = _userFactory.create();
 
                 trip.setGuid(resultItem.trip_leg_guid);
                 trip.setDepartureDateTime(new Date(resultItem.departure_datetime));
                 trip.setPrice(resultItem.price);
                 trip.setSeatsAvailable(resultItem.seats_available);
                 trip.setLadiesOnly(resultItem.ladies_only);
+
+                driver.setPicture(resultItem.driver_picture_url);
+
+                trip.setDriver(driver);
 
                 trips.push(trip);
             }
@@ -24,10 +38,19 @@
 
     function Trip(data) {
         var _guid = false;
+        var _driver = null;
         var _departureDateTime = new Date();
         var _price = 0;
         var _seatsAvailable = 0;
         var _ladiesOnly = false;
+
+        this.setDriver = function(driver) {
+            _driver = driver;
+        }
+
+        this.getDriver = function() {
+            return _driver;
+        }
 
         this.setDepartureDateTime = function(departureDateTime) {
             _departureDateTime = departureDateTime;
@@ -71,14 +94,20 @@
     }
 
     if (isNode) {
-        module.exports = new TripFactory();
+        module.exports = new TripFactory(
+            require('../src/UserFactory.js')
+        );
     } else if (isAngular) {
         angular
             .module('TripFinder')
             .provider('TripFactory', function() {
-                this.$get = function() {
-                    return new TripFactory();
-                }
+                this.$get = [
+                    'UserFactory',
+                    function(userFactory) {
+                        return new TripFactory(
+                            userFactory
+                        );
+                    }];
             });
     }
 })(
