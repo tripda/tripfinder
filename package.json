@@ -16,6 +16,9 @@
   },
   "devDependencies": {
     "chai": "^3.4.1",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.5.1",
     "mocha": "^2.3.4",
     "q": "^1.4.1",
     "sinon": "^1.17.2",
