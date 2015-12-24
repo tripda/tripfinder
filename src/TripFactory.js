@@ -22,6 +22,7 @@
                 trip.setGuid(resultItem.trip_leg_guid);
                 trip.setDepartureDateTime(new Date(resultItem.departure_datetime));
                 trip.setPrice(resultItem.price);
+                trip.setCurrencySign(resultItem.currency_sign);
                 trip.setSeatsAvailable(resultItem.seats_available);
                 trip.setLadiesOnly(resultItem.ladies_only);
 
@@ -41,6 +42,7 @@
         var _driver = null;
         var _departureDateTime = new Date();
         var _price = 0;
+        var _currencySign = false;
         var _seatsAvailable = 0;
         var _ladiesOnly = false;
 
@@ -82,6 +84,14 @@
 
         this.getPrice = function() {
             return _price;
+        }
+
+        this.setCurrencySign = function(currencySign) {
+            _currencySign = currencySign;
+        }
+
+        this.getCurrencySign = function() {
+            return _currencySign;
         }
 
         this.setLadiesOnly = function(ladiesOnly) {
