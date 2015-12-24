@@ -16,6 +16,10 @@ describe('Trip Factory', function() {
 
         expect(firstTrip.getGuid()).to.equal('9ca39793-b76c-4fef-b8a2-cf51d9424fc6');
         expect(firstTrip.getDepartureDateTime().getFullYear()).to.equal(2016);
+        expect(firstTrip.getOriginCity()).to.equal('Sao Paulo');
+        expect(firstTrip.getOriginAddress()).to.equal('Sao Paulo - SP');
+        expect(firstTrip.getDestinationCity()).to.equal('Rio de Janeiro');
+        expect(firstTrip.getDestinationAddress()).to.equal('Rio de Janeiro - RJ');
         expect(firstTrip.getPrice()).to.equal(56);
         expect(firstTrip.getCurrencySign()).to.equal('R$ ');
         expect(firstTrip.getSeatsAvailable()).to.equal(2);

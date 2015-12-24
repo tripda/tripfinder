@@ -84,8 +84,8 @@ module.exports = {
          "departure_index" : 0,
          "cities" : [
             {
-               "name" : "São Paulo",
-               "address" : "São Paulo - SP",
+               "name" : "Sao Paulo",
+               "address" : "Sao Paulo - SP",
                "state" : "SP",
                "location" : "6gyf4bfg",
                "country" : "BR"
