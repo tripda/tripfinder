@@ -1,4 +1,4 @@
-(function(isNode) {
+(function(isNode, isAngular) {
     function UrlBuilder() {
         var _domain = null;
 
@@ -100,9 +100,18 @@
 
     if (isNode) {
         module.exports = new UrlBuilder();
+    } else if (isAngular) {
+        angular
+            .module('TripFinder')
+            .provider('UrlBuilder', function() {
+                this.$get = function() {
+                    return new UrlBuilder();
+                }
+            });
     }
 })(
-    typeof module !== "undefined" && module.exports
+    typeof module !== "undefined" && module.exports,
+    typeof angular !== "undefined"
 );
 
 

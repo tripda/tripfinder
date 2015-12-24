@@ -1,4 +1,4 @@
-(function(isNode) {
+(function(isNode, isAngular) {
     function TripFinder(
         urlBuilder,
         httpClient,
@@ -66,7 +66,26 @@
             require('request-promise'),
             require('../src/TripFactory.js')
         );
+    } else if (isAngular) {
+        angular
+            .module('TripFinder')
+            .provider('Finder', function() {
+                this.$get = [
+                    'UrlBuilder',
+                    'TripFactory',
+                    'TripFinderHttpClient',
+                    function(urlBuilder, tripFactory, tripFinderHttpClient) {
+                        urlBuilder.setDomain('http://api.tripda.com.br/trip/new-search/');
+
+                        return new TripFinder(
+                            urlBuilder,
+                            tripFinderHttpClient,
+                            tripFactory
+                        );
+                    }]
+                });
     }
 })(
-    typeof module !== "undefined" && module.exports
+    typeof module !== "undefined" && module.exports,
+    typeof angular !== "undefined"
 );

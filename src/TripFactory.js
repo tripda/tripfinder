@@ -1,4 +1,4 @@
-(function(isNode) {
+(function(isNode, isAngular) {
     function TripFactory() {
         this.createFromApiResponse = createFromApiResponse;
 
@@ -72,8 +72,17 @@
 
     if (isNode) {
         module.exports = new TripFactory();
+    } else if (isAngular) {
+        angular
+            .module('TripFinder')
+            .provider('TripFactory', function() {
+                this.$get = function() {
+                    return new TripFactory();
+                }
+            });
     }
 })(
-    typeof module !== "undefined" && module.exports
+    typeof module !== "undefined" && module.exports,
+    typeof angular !== "undefined"
 );
 
