@@ -8,7 +8,25 @@
     }
 
     function User() {
+        var _name = false;
         var _picture = false;
+        var _age = 0;
+
+        this.setAge = function(age) {
+            _age = age;
+        }
+
+        this.getAge = function() {
+            return _age;
+        }
+
+        this.setName = function(name) {
+            _name = name;
+        }
+
+        this.getName = function() {
+            return _name;
+        }
 
         this.setPicture = function(picture) {
             _picture = picture;

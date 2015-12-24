@@ -27,7 +27,9 @@
                 trip.setSeatsAvailable(resultItem.seats_available);
                 trip.setLadiesOnly(resultItem.ladies_only);
 
+                driver.setName(resultItem.driver_member_name);
                 driver.setPicture(resultItem.driver_picture_url);
+                driver.setAge(resultItem.driver_age);
 
                 trip.setDriver(driver);
 
