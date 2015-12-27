@@ -23,6 +23,7 @@
                 trip.setDepartureDateTime(new Date(resultItem.departure_datetime));
                 trip.setCities(resultItem.cities);
                 trip.setPrice(resultItem.price);
+                trip.setPriceLevel(resultItem.price_level);
                 trip.setCurrencySign(resultItem.currency_sign);
                 trip.setSeatsAvailable(resultItem.seats_available);
                 trip.setLadiesOnly(resultItem.ladies_only);
@@ -46,9 +47,18 @@
         var _departureDateTime = new Date();
         var _cities = [];
         var _price = 0;
+        var _priceLevel = 0;
         var _currencySign = false;
         var _seatsAvailable = 0;
         var _ladiesOnly = false;
+
+        this.setPriceLevel = function(priceLevel) {
+            _priceLevel = priceLevel;
+        }
+
+        this.getPriceLevel = function() {
+            return _priceLevel;
+        }
 
         this.setCities = function(cities) {
             _cities = cities;

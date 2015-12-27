@@ -21,6 +21,7 @@ describe('Trip Factory', function() {
         expect(firstTrip.getDestinationCity()).to.equal('Rio de Janeiro');
         expect(firstTrip.getDestinationAddress()).to.equal('Rio de Janeiro - RJ');
         expect(firstTrip.getPrice()).to.equal(56);
+        expect(firstTrip.getPriceLevel()).to.equal(1);
         expect(firstTrip.getCurrencySign()).to.equal('R$ ');
         expect(firstTrip.getSeatsAvailable()).to.equal(2);
         expect(firstTrip.getLadiesOnly()).to.equal(true);
