@@ -11,6 +11,15 @@
         var _name = false;
         var _picture = false;
         var _age = 0;
+        var _average_rating = 0;
+
+        this.setAverageRating = function(averageRating) {
+            _average_rating = averageRating;
+        }
+
+        this.getAverageRating = function() {
+            return _average_rating;
+        }
 
         this.setAge = function(age) {
             _age = age;

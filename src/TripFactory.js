@@ -32,6 +32,7 @@
                 driver.setName(resultItem.driver_member_name);
                 driver.setPicture(resultItem.driver_picture_url);
                 driver.setAge(resultItem.driver_age);
+                driver.setAverageRating(resultItem.driver_average_rating);
 
                 trip.setDriver(driver);
 

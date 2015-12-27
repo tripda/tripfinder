@@ -30,6 +30,7 @@ describe('Trip Factory', function() {
         expect(firstTrip.getDriver().getName()).to.equal('Joseus T.');
         expect(firstTrip.getDriver().getPicture()).to.equal('https://graph.facebook.com/100005369929083/picture?width=150&height=150');
         expect(firstTrip.getDriver().getAge()).to.equal('24');
+        expect(firstTrip.getDriver().getAverageRating()).to.equal(4);
     });
 });
 
