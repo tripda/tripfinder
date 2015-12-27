@@ -25,6 +25,7 @@ describe('Trip Factory', function() {
         expect(firstTrip.getCurrencySign()).to.equal('R$ ');
         expect(firstTrip.getSeatsAvailable()).to.equal(2);
         expect(firstTrip.getLadiesOnly()).to.equal(true);
+        expect(firstTrip.isAutoAccept()).to.equal(true);
 
         expect(firstTrip.getDriver().getName()).to.equal('Joseus T.');
         expect(firstTrip.getDriver().getPicture()).to.equal('https://graph.facebook.com/100005369929083/picture?width=150&height=150');

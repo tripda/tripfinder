@@ -27,6 +27,7 @@
                 trip.setCurrencySign(resultItem.currency_sign);
                 trip.setSeatsAvailable(resultItem.seats_available);
                 trip.setLadiesOnly(resultItem.ladies_only);
+                trip.setAutoAccept(resultItem.auto_accept);
 
                 driver.setName(resultItem.driver_member_name);
                 driver.setPicture(resultItem.driver_picture_url);
@@ -51,6 +52,15 @@
         var _currencySign = false;
         var _seatsAvailable = 0;
         var _ladiesOnly = false;
+        var _autoAccept = false;
+
+        this.setAutoAccept = function(autoAccept) {
+            _autoAccept = autoAccept;
+        }
+
+        this.isAutoAccept = function() {
+            return _autoAccept;
+        }
 
         this.setPriceLevel = function(priceLevel) {
             _priceLevel = priceLevel;
