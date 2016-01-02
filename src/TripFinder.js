@@ -42,6 +42,10 @@
 
         function find() {
             var promise = new Promise(function(resolve, reject) {
+                if (getOrigin() == false) {
+                    throw new Error('Cannot find trips with undefined origin and destination.');
+                }
+
                 var urlParams = {
                     fromGeohash: _parameters.origin
                 };

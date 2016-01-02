@@ -55,4 +55,16 @@ describe('Trip Finder', function() {
 
         expect(tripFinder.getOrigin()).to.be.false;
     });
+
+    describe('errors', function() {
+        it('is thrown when attempting to find trips without defining an origin', function(done) {
+            tripFinder
+                .find()
+                .then(null, function(error) {
+                    expect(error.message).to.equal('Cannot find trips with undefined origin and destination.');
+
+                    done();
+                });
+        });
+    });
 });
