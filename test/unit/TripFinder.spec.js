@@ -21,6 +21,7 @@ describe('Trip Finder', function() {
         tripFinder.setUrlBuilder(urlBuilderMock);
         tripFinder.setHttpClient(httpClientMock);
         tripFinder.setTripFactory(tripFactoryMock);
+        tripFinder.resetSearchParameters();
     });
 
     it('find trips', function(done) {
@@ -45,5 +46,13 @@ describe('Trip Finder', function() {
 
                 done();
             });
+    });
+
+    it('reset all parameters', function() {
+        tripFinder.setOrigin('123456');
+
+        tripFinder.resetSearchParameters();
+
+        expect(tripFinder.getOrigin()).to.be.false;
     });
 });

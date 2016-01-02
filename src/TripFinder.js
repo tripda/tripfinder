@@ -16,7 +16,9 @@
         this.setHttpClient = setHttpClient;
         this.setTripFactory = setTripFactory;
         this.setOrigin = setOrigin;
+        this.getOrigin = getOrigin;
         this.find = find;
+        this.resetSearchParameters = resetSearchParameters;
 
         function setUrlBuilder(urlBuilder) {
             _urlBuilder = urlBuilder;
@@ -32,6 +34,10 @@
 
         function setOrigin(origin) {
             _parameters.origin = origin;
+        }
+
+        function getOrigin() {
+            return _parameters.origin;
         }
 
         function find() {
@@ -54,6 +60,10 @@
             });
 
             return promise;
+        }
+
+        function resetSearchParameters() {
+            _parameters.origin = false;
         }
     }
 
