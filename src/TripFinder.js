@@ -69,7 +69,7 @@
     } else if (isAngular) {
         angular
             .module('TripFinder')
-            .provider('Finder', function() {
+            .provider('TripFinder', function() {
                 this.$get = [
                     'UrlBuilder',
                     'TripFactory',
