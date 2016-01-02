@@ -1,8 +1,14 @@
 (function() {
     function httpClient(options) {
         var promise = new Promise(function(resolve, reject) {
+            var url = options.uri;
+
+            if (options.qs) {
+                url += "?" + buildQueryString(options.qs);
+            }
+
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', options.uri);
+            xhr.open('GET', url);
             xhr.send(null);
 
             xhr.onreadystatechange = function() {
@@ -20,6 +26,16 @@
         });
 
         return promise;
+    }
+
+    function buildQueryString(data) {
+        var params = [];
+
+        for (var i in data) {
+            params.push(i + '=' + data[i]);
+        }
+
+        return params.join('&');
     }
 
     angular
