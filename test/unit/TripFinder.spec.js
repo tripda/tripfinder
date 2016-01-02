@@ -28,7 +28,7 @@ describe('Trip Finder', function() {
             fromGeohash: '123456'
         };
 
-        tripFinder.setDeparture('123456');
+        tripFinder.setOrigin('123456');
 
         tripFinder.find()
             .then(function(result) {

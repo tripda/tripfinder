@@ -9,13 +9,13 @@
         var _tripFactory = tripFactory;
 
         var _parameters = {
-            departure: false
+            origin: false
         };
 
         this.setUrlBuilder = setUrlBuilder;
         this.setHttpClient = setHttpClient;
         this.setTripFactory = setTripFactory;
-        this.setDeparture = setDeparture;
+        this.setOrigin = setOrigin;
         this.find = find;
 
         function setUrlBuilder(urlBuilder) {
@@ -30,14 +30,14 @@
             _tripFactory = tripFactory;
         }
 
-        function setDeparture(departure) {
-            _parameters.departure = departure;
+        function setOrigin(origin) {
+            _parameters.origin = origin;
         }
 
         function find() {
             var promise = new Promise(function(resolve, reject) {
                 var urlParams = {
-                    fromGeohash: _parameters.departure
+                    fromGeohash: _parameters.origin
                 };
 
                 var url = _urlBuilder.buildSearchUrl(urlParams);
