@@ -12,6 +12,7 @@
   "author": "dhuanco@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "ngeohash": "git://github.com/tripda/node-geohash.git",
     "request-promise": "^1.0.2"
   },
   "devDependencies": {

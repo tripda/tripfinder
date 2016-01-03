@@ -1,9 +1,11 @@
-describe('Trip Finder', function() {
+describe.only('Trip Finder', function() {
     var tripFinder;
 
     var URL_BUILDER_MOCK_BUILD_RETURN = "http://myserver.com/search/";
     var HTTP_CLIENT_MOCK_RETURN = {};
     var TRIP_FACTORY_CREATE_FROM_API_RESPONSE_RETURN = [];
+    var GEOCODER_GEOCODE_RETURN = {lat: '123', lng: '456'};
+    var GEOHASH_ENCODER_ENCODE_RETURN = 'abcdefg';
 
     var urlBuilderMock = {
         buildSearchUrl: sinon.stub().returns(URL_BUILDER_MOCK_BUILD_RETURN)
@@ -15,12 +17,23 @@ describe('Trip Finder', function() {
         createFromApiResponse: sinon.stub().returns(TRIP_FACTORY_CREATE_FROM_API_RESPONSE_RETURN)
     };
 
+    var geocoderMock = {
+        geocode: sinon.stub().returns(q.when(GEOCODER_GEOCODE_RETURN)),
+        setKey: sinon.stub()
+    };
+
+    var geohashEncoderMock = {
+        encode: sinon.stub().returns(GEOHASH_ENCODER_ENCODE_RETURN)
+    };
+
     beforeEach(function() {
         tripFinder = require('../../src/TripFinder.js');
 
         tripFinder.setUrlBuilder(urlBuilderMock);
         tripFinder.setHttpClient(httpClientMock);
         tripFinder.setTripFactory(tripFactoryMock);
+        tripFinder.setGeocoder(geocoderMock);
+        tripFinder.setGeohashEncoder(geohashEncoderMock);
         tripFinder.resetSearchParameters();
     });
 
@@ -54,6 +67,34 @@ describe('Trip Finder', function() {
         tripFinder.resetSearchParameters();
 
         expect(tripFinder.getOrigin()).to.be.false;
+    });
+
+    it('use geocoder and geohash encoder when origin is set as address string', function(done) {
+        tripFinder.setOrigin('New York');
+
+        tripFinder.find()
+            .then(function() {
+                var expectedParams = {
+                    fromGeohash: GEOHASH_ENCODER_ENCODE_RETURN
+                };
+
+                expect(geocoderMock.geocode).to.have.been.calledWith('New York');
+
+                expect(geohashEncoderMock.encode).to.have.been.calledWith(
+                    GEOCODER_GEOCODE_RETURN.lat,
+                    GEOCODER_GEOCODE_RETURN.lng
+                )
+
+                expect(urlBuilderMock.buildSearchUrl).to.have.been.calledWith(expectedParams);
+
+                done();
+            });
+    });
+
+    it('set geocoder api key', function() {
+        tripFinder.setGeocoderKey('MY_KEY');
+
+        expect(geocoderMock.setKey).to.have.been.calledWith('MY_KEY');
     });
 
     describe('errors', function() {
