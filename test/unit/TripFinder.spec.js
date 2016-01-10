@@ -1,4 +1,4 @@
-describe.only('Trip Finder', function() {
+describe('Trip Finder', function() {
     var tripFinder;
 
     var URL_BUILDER_MOCK_BUILD_RETURN = "http://myserver.com/search/";
