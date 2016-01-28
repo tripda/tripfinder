@@ -13,7 +13,8 @@
         var _geohashEncoder = geohashEncoder;
 
         var _parameters = {
-            origin: false
+            origin: false,
+            destination: false
         };
 
         this.setUrlBuilder = setUrlBuilder;
@@ -23,6 +24,7 @@
         this.setGeohashEncoder = setGeohashEncoder;
         this.setGeocoderKey = setGeocoderKey;
         this.setOrigin = setOrigin;
+        this.setDestination = setDestination;
         this.getOrigin = getOrigin;
         this.find = find;
         this.resetSearchParameters = resetSearchParameters;
@@ -55,21 +57,33 @@
             _parameters.origin = origin;
         }
 
+        function setDestination(destination) {
+            _parameters.destination = destination;
+        }
+
         function getOrigin() {
             return _parameters.origin;
+        }
+
+        function getDestination() {
+            return _parameters.destination;
         }
 
         function find() {
             var promise = new Promise(function(resolve, reject) {
                 var origin = getOrigin();
-                var geohashResolvedPromise = Promise.resolve(origin);
+                var destination = getDestination();
+                var geohashResolvedPromise = [
+                    Promise.resolve(origin),
+                    Promise.resolve(destination),
+                ]
 
                 if (origin == false) {
                     throw new Error('Cannot find trips with undefined origin and destination.');
                 }
 
-                if (origin.match(/\ /)) {
-                    geohashResolvedPromise = new Promise(function(resolve) {
+                if (origin && origin.match(/\ /)) {
+                    geohashResolvedPromise[0] = new Promise(function(resolve) {
                         _geocoder.geocode(origin)
                             .then(function(coordinates) {
                                 resolve(_geohashEncoder.encode(coordinates.lat, coordinates.lng));
@@ -77,10 +91,20 @@
                     });
                 }
 
-                geohashResolvedPromise
-                    .then(function(originGeohash) {
+                if (destination && destination.match(/\ /)) {
+                    geohashResolvedPromise[1] = new Promise(function(resolve) {
+                        _geocoder.geocode(destination)
+                            .then(function(coordinates) {
+                                resolve(_geohashEncoder.encode(coordinates.lat, coordinates.lng));
+                            });
+                    });
+                }
+
+                Promise.all(geohashResolvedPromise)
+                    .then(function(geohash) {
                         var urlParams = {
-                            fromGeohash: originGeohash
+                            fromGeohash: geohash[0],
+                            toGeohash: geohash[1]
                         };
 
                         var url = _urlBuilder.buildSearchUrl(urlParams);

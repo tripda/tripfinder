@@ -39,10 +39,12 @@ describe('Trip Finder', function() {
 
     it('find trips', function(done) {
         var expectedParams = {
-            fromGeohash: '123456'
+            fromGeohash: '123456',
+            toGeohash: '654321'
         };
 
         tripFinder.setOrigin('123456');
+        tripFinder.setDestination('654321');
 
         tripFinder.find()
             .then(function(result) {
@@ -71,14 +73,17 @@ describe('Trip Finder', function() {
 
     it('use geocoder and geohash encoder when origin is set as address string', function(done) {
         tripFinder.setOrigin('New York');
+        tripFinder.setDestination('San Francisco');
 
         tripFinder.find()
             .then(function() {
                 var expectedParams = {
-                    fromGeohash: GEOHASH_ENCODER_ENCODE_RETURN
+                    fromGeohash: GEOHASH_ENCODER_ENCODE_RETURN,
+                    toGeohash: GEOHASH_ENCODER_ENCODE_RETURN,
                 };
 
                 expect(geocoderMock.geocode).to.have.been.calledWith('New York');
+                expect(geocoderMock.geocode).to.have.been.calledWith('San Francisco');
 
                 expect(geohashEncoderMock.encode).to.have.been.calledWith(
                     GEOCODER_GEOCODE_RETURN.lat,

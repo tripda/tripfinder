@@ -9,14 +9,15 @@ if (!argv.key) {
     return;
 }
 
-if (!argv.origin) {
-    console.log('Please define an origin.');
+if (!argv.origin && !argv.destination) {
+    console.log('Please define an origin or a destination.');
     return;
 }
 
 finder.setGeocoderKey(argv.key);
 
 finder.setOrigin(argv.origin);
+finder.setDestination(argv.destination);
 
 finder
     .find()
