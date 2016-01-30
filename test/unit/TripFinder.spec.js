@@ -102,7 +102,7 @@ describe('Trip Finder', function() {
         expect(geocoderMock.setKey).to.have.been.calledWith('MY_KEY');
     });
 
-    describe('errors', function() {
+    describe('Errors', function() {
         it('is thrown when attempting to find trips without defining an origin or destination', function(done) {
             tripFinder
                 .find()
@@ -113,7 +113,7 @@ describe('Trip Finder', function() {
                 });
         });
 
-        it('error is not thrown if find with only with only destination set', function(done) {
+        it('is not thrown when searching with only destination set', function(done) {
             tripFinder.setDestination('123456');
 
             tripFinder

@@ -9,17 +9,13 @@ describe('Geocoder', function() {
 
         geocoder.setHttpClient(httpClientMock);
     });
-
-    it('error is thrown when attempting to use geocoder without providing key', function(done) {
-        geocoder.geocode('New York')
-            .then(null, function(error) {
-                expect(error.message).to.equal('In order to use the Geocoder, you must provide an API key from Google.');
-
-                done();
-            });
+    
+    afterEach(function() {
+        geocoder.setKey(null);
     });
 
     it('convert address string into geo coordinates by requesting via the http client', function(done) {
+
         geocoder.setKey('MY_KEY');
 
         geocoder.geocode('New York')
@@ -38,6 +34,19 @@ describe('Geocoder', function() {
 
                 done();
             });
+    });
+
+    describe('Errors', function() {
+
+        it('is thrown when attempting to use geocoder without providing key', function(done) {
+            geocoder.geocode('New York')
+                .then(null, function(error) {
+                    expect(error.message).to.equal('In order to use the Geocoder, you must provide an API key from Google.');
+
+                    done();
+                });
+        });
+
     });
 
 });
