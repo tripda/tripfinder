@@ -82,7 +82,7 @@
                     throw new Error('Cannot find trips with undefined origin and destination.');
                 }
 
-                if (origin && origin.match(/\ /)) {
+                if (isAddress(origin)) {
                     geohashResolvedPromise[0] = new Promise(function(resolve) {
                         _geocoder.geocode(origin)
                             .then(function(coordinates) {
@@ -91,7 +91,7 @@
                     });
                 }
 
-                if (destination && destination.match(/\ /)) {
+                if (isAddress(destination)) {
                     geohashResolvedPromise[1] = new Promise(function(resolve) {
                         _geocoder.geocode(destination)
                             .then(function(coordinates) {
@@ -127,6 +127,18 @@
         function resetSearchParameters() {
             _parameters.origin = false;
             _parameters.destination = false;
+        }
+
+        function isAddress(str) {
+            if (!isNaN(parseInt(str))) {
+                return false;
+            }
+
+            if (typeof str == "string") {
+                return true;
+            }
+
+            return false;
         }
     }
 
