@@ -78,7 +78,7 @@
                     Promise.resolve(destination),
                 ]
 
-                if (origin == false) {
+                if (origin == false && destination == false) {
                     throw new Error('Cannot find trips with undefined origin and destination.');
                 }
 
@@ -126,6 +126,7 @@
 
         function resetSearchParameters() {
             _parameters.origin = false;
+            _parameters.destination = false;
         }
     }
 

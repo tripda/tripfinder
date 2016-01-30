@@ -103,12 +103,22 @@ describe('Trip Finder', function() {
     });
 
     describe('errors', function() {
-        it('is thrown when attempting to find trips without defining an origin', function(done) {
+        it('is thrown when attempting to find trips without defining an origin or destination', function(done) {
             tripFinder
                 .find()
                 .then(null, function(error) {
                     expect(error.message).to.equal('Cannot find trips with undefined origin and destination.');
 
+                    done();
+                });
+        });
+
+        it('error is not thrown if find with only with only destination set', function(done) {
+            tripFinder.setDestination('123456');
+
+            tripFinder
+                .find()
+                .then(function(trips) {
                     done();
                 });
         });
