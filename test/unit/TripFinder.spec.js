@@ -38,6 +38,7 @@ describe('Trip Finder', function() {
     });
 
     it('find trips', function(done) {
+        
         var expectedParams = {
             fromGeohash: '123456',
             toGeohash: '654321',
@@ -48,8 +49,10 @@ describe('Trip Finder', function() {
         tripFinder.setDestination('654321');
         tripFinder.setDate('2016-01-28');
 
-        tripFinder.find()
+        tripFinder
+            .find()
             .then(function(result) {
+
                 expect(urlBuilderMock.buildSearchUrl).to.have.been.calledWith(expectedParams);
                 
                 expect(httpClientMock).to.have.been.calledWith({
@@ -62,23 +65,30 @@ describe('Trip Finder', function() {
                 expect(result).to.equal(TRIP_FACTORY_CREATE_FROM_API_RESPONSE_RETURN);
 
                 done();
+
             });
+
     });
 
     it('reset all parameters', function() {
+
         tripFinder.setOrigin('123456');
 
         tripFinder.resetSearchParameters();
 
         expect(tripFinder.getOrigin()).to.be.false;
+
     });
 
     it('use geocoder and geohash encoder when origin is set as address string', function(done) {
+
         tripFinder.setOrigin('New York');
         tripFinder.setDestination('San Francisco');
 
-        tripFinder.find()
+        tripFinder
+            .find()
             .then(function() {
+
                 var expectedParams = {
                     fromGeohash: GEOHASH_ENCODER_ENCODE_RETURN,
                     toGeohash: GEOHASH_ENCODER_ENCODE_RETURN,
@@ -96,17 +106,23 @@ describe('Trip Finder', function() {
                 expect(urlBuilderMock.buildSearchUrl).to.have.been.calledWith(expectedParams);
 
                 done();
+
             });
+
     });
 
     it('set geocoder api key', function() {
+
         tripFinder.setGeocoderKey('MY_KEY');
 
         expect(geocoderMock.setKey).to.have.been.calledWith('MY_KEY');
+
     });
 
     describe('Errors', function() {
+
         it('is thrown when attempting to find trips without defining an origin or destination', function(done) {
+
             tripFinder
                 .find()
                 .then(null, function(error) {
@@ -114,9 +130,11 @@ describe('Trip Finder', function() {
 
                     done();
                 });
+
         });
 
         it('is not thrown when searching with only destination set', function(done) {
+
             tripFinder.setDestination('123456');
 
             tripFinder
@@ -124,6 +142,19 @@ describe('Trip Finder', function() {
                 .then(function(trips) {
                     done();
                 });
+
+        });
+
+        it('is thrown when attempting to set date with an invalid format', function() {
+            var errorMessage = 'Invalid date format.';
+
+            expect(() => tripFinder.setDate('foobar')).to.throw(errorMessage);
+
+            expect(() => tripFinder.setDate('10-10-2016')).to.throw(errorMessage);
+
+            expect(() => tripFinder.setDate('2016/10/10')).to.throw(errorMessage);
+
+            expect(() => tripFinder.setDate('2016-1-1')).to.throw(errorMessage);
         });
     });
 });

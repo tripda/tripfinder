@@ -72,6 +72,10 @@
         }
 
         function setDate(date) {
+            if (!isDateValid(date)) {
+                throw new Error('Invalid date format.');
+            }
+
             _parameters.date = date;
         }
 
@@ -148,6 +152,18 @@
             }
 
             if (typeof str == "string") {
+                return true;
+            }
+
+            return false;
+        }
+
+        function isDateValid(date) {
+            if (date === false || date === null) {
+                return true;
+            }
+
+            if (typeof date == "string" && date.match(/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/)) {
                 return true;
             }
 
