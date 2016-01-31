@@ -1,5 +1,7 @@
 # TripFinder
 
+[![Build Status](https://travis-ci.org/tripda/tripfinder.png?branch=master)](https://travis-ci.org/tripda/tripfinder)
+
 TripFinder is a JavaScript tool for searching and retrieving car rides, stored in carpooling platform Tripda's database.
 
 ## Installation
