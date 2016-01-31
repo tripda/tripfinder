@@ -14,7 +14,8 @@
 
         var _parameters = {
             origin: false,
-            destination: false
+            destination: false,
+            date: false
         };
 
         this.setUrlBuilder = setUrlBuilder;
@@ -25,6 +26,7 @@
         this.setGeocoderKey = setGeocoderKey;
         this.setOrigin = setOrigin;
         this.setDestination = setDestination;
+        this.setDate = setDate;
         this.getOrigin = getOrigin;
         this.find = find;
         this.resetSearchParameters = resetSearchParameters;
@@ -69,10 +71,19 @@
             return _parameters.destination;
         }
 
+        function setDate(date) {
+            _parameters.date = date;
+        }
+
+        function getDate() {
+            return _parameters.date;
+        }
+
         function find() {
             var promise = new Promise(function(resolve, reject) {
                 var origin = getOrigin();
                 var destination = getDestination();
+                var date = getDate();
                 var geohashResolvedPromise = [
                     Promise.resolve(origin),
                     Promise.resolve(destination),
@@ -104,7 +115,8 @@
                     .then(function(geohash) {
                         var urlParams = {
                             fromGeohash: geohash[0],
-                            toGeohash: geohash[1]
+                            toGeohash: geohash[1],
+                            date: date
                         };
 
                         var url = _urlBuilder.buildSearchUrl(urlParams);
@@ -127,6 +139,7 @@
         function resetSearchParameters() {
             _parameters.origin = false;
             _parameters.destination = false;
+            _parameters.date = false;
         }
 
         function isAddress(str) {

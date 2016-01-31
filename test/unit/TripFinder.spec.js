@@ -40,11 +40,13 @@ describe('Trip Finder', function() {
     it('find trips', function(done) {
         var expectedParams = {
             fromGeohash: '123456',
-            toGeohash: '654321'
+            toGeohash: '654321',
+            date: '2016-01-28'
         };
 
         tripFinder.setOrigin('123456');
         tripFinder.setDestination('654321');
+        tripFinder.setDate('2016-01-28');
 
         tripFinder.find()
             .then(function(result) {
@@ -80,6 +82,7 @@ describe('Trip Finder', function() {
                 var expectedParams = {
                     fromGeohash: GEOHASH_ENCODER_ENCODE_RETURN,
                     toGeohash: GEOHASH_ENCODER_ENCODE_RETURN,
+                    date: false
                 };
 
                 expect(geocoderMock.geocode).to.have.been.calledWith('New York');
